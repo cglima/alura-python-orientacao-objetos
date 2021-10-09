@@ -16,6 +16,16 @@ class Conta:
     def saca(self, valor):
         self.__saldo -= valor
 
-    def transfere(self,valor, destino):
+    def transfere(self, valor, destino):
         self.saca(valor)
         destino.deposita(valor)
+
+    def get_saldo(self):
+        return self.__saldo
+
+    def get_titular(self):
+        return self.__titular
+
+    def set_limite(self, limite):
+        self.__limite = limite
+
