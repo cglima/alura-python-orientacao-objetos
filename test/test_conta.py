@@ -31,9 +31,9 @@ class TestConta:
         assert conta_ciana.saldo == -400.0
 
     def test_nao_pode_depositar_um_valor_negativo(self, conta_ciana):
-
-        # O with(pytest.raises(NOME_+DA_EXCECAO)) verifica se um erro foi lançado pela instruções executadas
-        # dentro do with
+        """O with(pytest.raises(NOME_+DA_EXCECAO)) verifica se um erro foi lançado
+        pela instruções executadas dentro do with
+        """
         with(pytest.raises(ValueError)) as excecao:
             conta_ciana.deposita(-500.0)
 
@@ -41,20 +41,32 @@ class TestConta:
         conta_ciana.deposita(500.0)
         assert conta_ciana.saldo == 600.0
 
-    #não pode transferir numero negativo
     def test_nao_pode_transferir_numero_negativo(self, conta_ciana, conta_jom):
+        """ não pode transferir numero negativo """
+
         with(pytest.raises(ValueError)) as excecao:
             conta_ciana.transfere(-200.0, conta_jom)
 
-    #o valor de transferencia nao pode exceder o valor disponivel para saque da conta origem
     def test_o_valor_de_transferencia_nao_pode_exceder_o_valor_disponivel_para_saque_da_conta_origem(self,
                                                                                                      conta_ciana,
                                                                                                      conta_jom):
+        """o valor de transferencia não pode exceder o valor disponivel para saque da conta origem """
+
         with(pytest.raises(ValueError)) as excecao:
             conta_ciana.transfere(1200.0, conta_jom)
 
-    #nao pode fazer uma transferencia com valor acima do limite de transferencia (10000.0)
     def test_nao_pode_fazer_uma_transferencia_com_valor_acima_do_limite_de_transferencia(self, conta_ciana, conta_jom):
+        """ não pode fazer uma transferencia com valor acima do limite de transferencia (10000.0) """
+
         with(pytest.raises(ValueError)) as excecao:
             conta_ciana.deposita(15000.0)
             conta_ciana.transfere(10100.0, conta_jom)
+
+    def test_o_limite_da_conta_nao_pode_ser_negativo(self, conta_ciana):
+        with(pytest.raises(ValueError)) as excecao:
+            conta_ciana.limite = -100.0
+
+    def test_altera_o_limite_da_conta(self,conta_ciana):
+        conta_ciana.limite = 5000.0
+        conta_ciana.saca(5100.0)
+        assert conta_ciana.saldo == -5000.0

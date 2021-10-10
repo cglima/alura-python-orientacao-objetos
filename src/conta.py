@@ -58,8 +58,10 @@ class Conta:
 
     @limite.setter
     def limite(self, limite):
-        print('Alterando o valor do limite')
-        self.__limite = limite
+        if limite < 0:
+            raise ValueError("O valor do limite nao pode ser negativo!")
+        else:
+            self.__limite = limite
 
     #método de escopo de classe - executado pela classe e não pelo objeto
     @staticmethod
