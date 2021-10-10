@@ -1,6 +1,5 @@
 class Conta:
 
-    numero_contas = 0
     limite_transferencia = 10000.0
 
     def __init__(self, numero, titular, saldo, limite):
@@ -9,7 +8,6 @@ class Conta:
         self.__titular = titular
         self.__saldo = saldo
         self.__limite = limite
-        Conta.numero_contas += 1
 
     def __repr__(self):
         """ Representação do objeto """
@@ -23,7 +21,6 @@ class Conta:
             raise ValueError("o valor a depositar nao pode ser negativo!")
         else:
             self.__saldo += valor
-
 
     def __pode_sacar(self, valor_a_sacar):
         valor_disponivel_a_sacar = self.saldo + self.limite
@@ -40,7 +37,7 @@ class Conta:
         self.__saldo -= valor
 
     def transfere(self, valor, destino):
-        if valor > 10000.0:
+        if valor > Conta.limite_transferencia:
             raise ValueError("O valor para transferencia é maior que o limite permitido (10000.0)")
         else:
             self.saca(valor)
